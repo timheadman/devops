@@ -1,0 +1,32 @@
+version: '3.9'
+
+volumes:
+  conf:
+  www:
+  ssl:
+  cronfile:
+
+networks:
+  custom:
+    driver: bridge
+
+services:
+  nginx:
+    container_name: "nginx"
+    image: nginx_certbot
+    restart: always
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - conf:/etc/nginx/:rw
+      - www:/var/www/html/:ro
+      - ssl:/etc/letsencrypt/:rw
+      - cronfile:/etc/cron.d/cronfile
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - custom
+    command: ["cron", "-f"]
+

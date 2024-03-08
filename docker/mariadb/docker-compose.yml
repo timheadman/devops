@@ -1,0 +1,19 @@
+version: "3.9"
+
+volumes:
+  mysql:
+  backup:
+
+services:
+  db:
+    container_name: "mariadb"
+    image: mariadb:10.11.2
+    restart: always
+    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
+    env_file: ./secrets.env
+    volumes:
+      - mysql:/var/lib/mysql
+      - backup:/backup
+    ports:
+      - "3307:3306" 
+

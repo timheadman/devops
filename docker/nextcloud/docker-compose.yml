@@ -1,0 +1,23 @@
+version: '3.9'
+
+volumes:
+  nextcloud:
+    external: true
+
+services:
+  nextcloud:
+    image: nextcloud
+    container_name: "nextcloud"
+    restart: always
+    env_file: ./secrets.env
+    ports:
+      - 8010:80
+    volumes:
+      - nextcloud:/var/www/html
+    networks:
+      - nextcloud_custom
+
+networks:
+  nextcloud_custom:
+    name: nginx_custom
+    external: true

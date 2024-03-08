@@ -1,0 +1,40 @@
+version: '3.8'
+  # https://hub.docker.com/r/dperson/samba
+
+volumes:
+  samba:
+    external: true
+
+services:
+  samba:
+    image: dperson/samba:latest
+    container_name: "samba"
+    restart: always
+    deploy:
+      resources:
+        limits:
+          #cpus: '0.50'
+          memory: 500M
+        #reservations:
+          #cpus: '0.25'
+          #memory: 20M
+    command:
+      -r
+      -s "backup;/mount/backup;yes;yes;no;;;backup,tim"
+      -s "books;/mount/books;yes;yes;yes;;;tim"
+      -s "photo;/mount/photo;yes;yes;yes;;;tim,ksu"
+      -s "public;/mount/public;yes;no;yes"
+      -s "soft;/mount/soft;yes;yes;yes;;;tim"
+      -s "video;/mount/video;yes;yes;yes;;;tim,ksu"
+      -w "WORKGROUP"
+      -u "backup;DSDh3F42"
+      -u "tim;6n8x8q27"
+      -u "ksu;TfHGlS3c"
+      -u "german;ArpHHEzr"
+      -u "sofia;rMrrsQUw"
+    ports:
+      - 139:139
+      - 445:445
+    volumes:
+      - samba:/mount
+

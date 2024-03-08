@@ -1,0 +1,18 @@
+# files
+*.log
+*.tar
+*.gzip
+*.bz2
+config*.*
+secrets.*
+secret.*
+*venv*
+*.test
+*.temp
+*test*
+*temp*
+# folders
+.*/
+test*/
+**/temp*/
+backup_tmp*/
